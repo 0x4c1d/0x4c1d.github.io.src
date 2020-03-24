@@ -1,0 +1,29 @@
+name: github pages
+
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Zola
+        run: sudo snap install --edge zola
+
+      - name: Build
+        run: zola build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: 0x4c1d/0x4c1d.github.io
+          publish_branch: master
+          publish_dir: ./public
+          force_orphan: true
+
