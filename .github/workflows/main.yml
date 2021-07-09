@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
 
-      - name: Install Zola
-        run: sudo snap install --edge zola
+      - name: Install Hugo
+        run: sudo snap install hugo --channel=extended
 
       - name: Build
-        run: zola build
+        run: hugo -D
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
